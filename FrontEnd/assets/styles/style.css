@@ -1,0 +1,652 @@
+body {
+  background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  cursor: default;
+}
+/* HEADER TODAS LAS PAGINAS */
+header {
+  background-color: #000000d9;
+  color: white;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+header h1 {
+  margin: 0;
+  padding: 0 0 0 60px;
+}
+header section ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0 60px 0 0;
+  display: flex;
+  gap: 20px;
+}
+.buttonNav {
+  color: white;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+.buttonNav:hover {
+  transition: all 0.5s ease;
+  transform: scale(1.1);
+}
+.nav .fas {
+  color: white;
+}
+/* FOOTER TODAS LAS PAGINAS */
+.footer {
+  background-color: #172018;
+  color: white;
+  padding: 40px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.footer-section {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.footer-info,
+.footer-social {
+  max-width: 300px;
+}
+
+.footer-info h3,
+.footer-social h3 {
+  margin-bottom: 10px;
+  font-size: 20px;
+  border-bottom: 1px solid white;
+  padding-bottom: 5px;
+}
+
+.footer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-list li {
+  margin-bottom: 8px;
+}
+
+.footer-list a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer-list a:hover {
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 14px;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+  width: 100%;
+}
+
+.footer-list i {
+  margin-right: 8px;
+  color: #4caf50;
+}
+.footer-list a i {
+  color: #4caf50;
+}
+.footer-list a:hover i {
+  color: #81c784;
+}
+
+/* Main pagina principal */
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.carrusel {
+  position: relative;
+  max-width: 800px;
+  justify-content: center;
+  align-items: center;
+}
+.d-block {
+  width: 800px;
+  height: 250px;
+  object-fit: cover;
+}
+.title-carrusel {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  border-radius: 30%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 30%;
+  left: 50%;
+  z-index: 1;
+}
+/* Estilos para las card de productos */
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  margin-top: 20px;
+}
+
+.productos-destacados h2 {
+  text-align: center;
+  margin-top: 20px;
+}
+.productos-destacados {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.link-productos {
+  text-decoration: none;
+  margin: 10px;
+}
+
+/* FIN DEL DISEÑO DE DE LA PAGINA PRINCIPAL */
+
+/* LOGIN Y REGISTER */
+
+/* Fondo difuminado */
+.custom-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7); /* fondo negro semitransparente */
+  backdrop-filter: blur(5px); /* difumina lo que hay detrás */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Contenedor del modal */
+.custom-modal .modal-content {
+  background-color: #121212; /* negro muy oscuro */
+  color: #eee; /* texto blanco grisáceo */
+  padding: 30px 40px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.9);
+  position: relative;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Botón cerrar */
+.custom-modal .close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #bbb; /* gris claro */
+  transition: color 0.3s ease;
+}
+
+.custom-modal .close:hover {
+  color: #fff; /* blanco */
+}
+
+/* Título */
+.custom-modal h2 {
+  margin-bottom: 25px;
+  font-weight: 600;
+  text-align: center;
+  color: #fff;
+}
+
+/* Inputs */
+.custom-modal textarea,
+.custom-modal input[type="number"],
+.custom-modal input[type="text"],
+.custom-modal input[type="email"],
+.custom-modal input[type="password"] {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #2c2c2c; /* gris oscuro */
+  color: #eee;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.custom-modal input[type="email"]::placeholder,
+.custom-modal input[type="password"]::placeholder {
+  color: #888; /* gris medio */
+}
+
+.custom-modal input[type="email"]:focus,
+.custom-modal input[type="password"]:focus {
+  background-color: #3a3a3a; /* gris medio oscuro */
+  outline: none;
+  box-shadow: 0 0 8px #999; /* sombra gris */
+}
+
+/* Botón login */
+.custom-modal button[type="submit"] {
+  width: 100%;
+  padding: 14px;
+  background-color: #444; /* gris */
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.custom-modal button[type="submit"]:hover {
+  background-color: #666; /* gris más claro */
+}
+/* Boton login una vez iniciado sesion */
+#dropdownBtn {
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  position: relative;
+  z-index: 1000;
+}
+
+.dropdown-wrapper {
+  position: relative;
+  display: inline-block;
+  z-index: 999;
+}
+
+#dropdownIcon {
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.dropdown-content-login {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  right: 0; /* para que se abra hacia la izquierda */
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.dropdown-content-login a {
+  color: black;
+  padding: 10px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content-login a:hover {
+  background-color: #e5e5e5;
+}
+
+/* Texto inferior */
+.custom-modal p {
+  margin-top: 20px;
+  font-size: 14px;
+  text-align: center;
+  color: #aaa; /* gris claro */
+}
+
+.custom-modal p button {
+  background: none;
+  border: none;
+  color: #eee;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.custom-modal p button:hover {
+  color: #fff;
+}
+
+/* FIN DEL LOGIN Y REGISTER */
+
+/* DISEÑO DE LA PAGINA DE PRODUCTOS */
+
+.products-body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Main container */
+.ecommerce-main {
+  flex: 1;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+/* Filtros (categoría + búsqueda) */
+.filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  padding: 10px 20px;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.dropdown-toggle:hover {
+  background-color: #fdfafa;
+}
+
+.checkbox-group {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fffdfd;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  padding: 10px 20px;
+  margin-top: 5px;
+  display: none;
+  z-index: 100;
+  min-width: 160px;
+  color: rgb(0, 0, 0);
+  font-size: 14px;
+}
+
+.checkbox-group.show {
+  display: block;
+}
+
+.checkbox-group label {
+  display: block;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.search-bar input {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  width: 250px;
+}
+
+.no-results {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #888;
+  margin-top: 2rem;
+}
+
+/* Tarjetas de producto */
+.product-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.product-card h3 {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.product-card .price {
+  color: #444;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.product-card .add-to-cart {
+  background-color: #000000;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+.card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 0 10px 0 10px;
+  border-radius: 8px;
+  text-align: center;
+  background: white;
+}
+
+.card img {
+  max-width: 100%;
+  height: 150px;
+  border-radius: 4px;
+}
+.product-card .add-to-cart:hover {
+  background-color: #1b61c1;
+}
+.opc-admin-class {
+  display: none;
+  background-color: red;
+}
+/* Responsivo */
+@media (max-width: 600px) {
+  .search-bar input {
+    width: 100%;
+  }
+
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+/* FIN DEL DISEÑO DE LA PAGINA DE PRODUCTOS */
+
+/* ESTILOS PARA LA UI DEL ADMIN */
+
+/* Contenedor principal */
+.admin-panel {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1.5fr;
+  grid-template-rows: auto auto;
+  gap: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Título principal */
+.admin-title {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #222;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 10px;
+}
+
+/* Columnas */
+.grid-left,
+.grid-right,
+.grid-superadmin {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Secciones de admin */
+.admin-panel h2 {
+  font-size: 1.3rem;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+/* Formularios */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.admin-panel input,
+.admin-panel textarea,
+.admin-panel select,
+.admin-panel button {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.admin-panel input:focus,
+.admin-panel textarea:focus,
+.admin-panel select:focus {
+  border-color: #3f51b5;
+  outline: none;
+  box-shadow: 0 0 5px rgba(63, 81, 181, 0.3);
+}
+
+.admin-panel button {
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.admin-panel button:hover {
+  background-color: #303f9f;
+}
+
+.admin-panel .producto-no-encontrado {
+  color: red;
+  font-size: 16px;
+  text-align: center;
+}
+.admin-panel .producto-encontrado {
+  color: green;
+  font-size: 16px;
+  text-align: center;
+}
+
+.mensaje_tarjeta {
+  padding: 8px;
+  display: none;
+  transition: all, 4s;
+}
+
+#aviso-actualizar {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  display: none;
+}
+
+#aviso-actualizar.visible {
+  display: block;
+  opacity: 1;
+}
+
+.admin-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.icon-button {
+  background-color: #f0f0f0;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-button i {
+  pointer-events: none; /* para evitar que el clic se lo lleve el ícono */
+}
+
+.icon-button.eliminar {
+  color: #e74c3c;
+}
+
+.icon-button.actualizar {
+  color: #2980b9;
+}
+
+.icon-button:hover {
+  background-color: #dcdcdc;
+  transform: scale(1.1);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .admin-panel {
+    grid-template-columns: 1fr;
+  }
+}
