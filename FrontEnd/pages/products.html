@@ -33,7 +33,29 @@
           </li>
           <li class="buttonNav"><a href="" class="buttonNav">About</a></li>
           <li class="buttonNav">
-            <a href="#"><i class="fas fa-shopping-cart"></i></a>
+            <div class="cart-container">
+              <button
+                id="cartButton"
+                class="cart-button"
+                aria-label="Carrito de compras"
+              >
+                <i class="fas fa-shopping-cart"></i>
+                <span id="cartCount" class="cart-count">0</span>
+              </button>
+
+              <div id="cartDropdown" class="cart-dropdown">
+                <p class="empty-message">El carrito está vacío</p>
+                <ul id="cartItemsList"></ul>
+                <a
+                  id="goToCart"
+                  class="go-to-cart-btn"
+                  style="display: none"
+                  href="cart.html"
+                >
+                  Ir al carrito
+                </a>
+              </div>
+            </div>
           </li>
           <li id="login" class="buttonNav">
             <a id="loginBtn"><i class="fas fa-user"></i></a>
@@ -129,6 +151,14 @@
     </footer>
     <!-- Modal para el login -->
     <div id="modal-container" class="login"></div>
+    <!-- js para el dropdown del filter -->
+    <script src="../assets/js/dropdownFilter.js"></script>
+    <!-- js para el cart.js -->
+    <script type="module" src="../assets/js/cart.js"></script>
+    <!-- js para el cartDropdown -->
+    <script type="module" src="../assets/js/cartDropdown.js"></script>
+    <!-- js para admin -->
+    <script type="module" src="../assets/js/admin.js"></script>
     <!-- js para productos -->
     <script type="module" src="../assets/js/products.js"></script>
     <!-- js para modal de login -->

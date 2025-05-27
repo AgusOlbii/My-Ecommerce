@@ -21,9 +21,10 @@ const users = [
     email: "m@g.com",
     telefono: "341789239",
     password: "messi",
-    rol: "admin",
+    rol: "superAdmin",
   },
 ];
+localStorage.setItem("usuarios", JSON.stringify(users));
 // Funcion para cambiar la UI al iniciar sesion agregando un dropdown con opciones de perfil, configuracion y cerrar sesion
 export function cambiarUi(access, admin) {
   if (access) {
@@ -99,7 +100,7 @@ export function inicializarLogin() {
     if (user) {
       alert(`Bienvenido, ${user.nombre}!`);
       console.log("--------ACCESO CORRECTO------------");
-      if (user.rol === "admin") {
+      if (user.rol === "admin" || user.rol === "superAdmin") {
         admin = true;
       }
       access = true;
@@ -147,6 +148,7 @@ export function inicializarRegistro() {
       users.push(nuevoUsuario);
       alert("Registro exitoso!");
       console.log(users);
+      localStorage.setItem("usuarios", JSON.stringify(users));
     }
   });
   console.log(users);

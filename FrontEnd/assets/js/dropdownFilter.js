@@ -1,4 +1,6 @@
 const handleDropdown = (event) => {
+  console.log("Se hizo click en:", event.target); // Ver si se dispara
+
   const toggleBtn = event.target.closest(".dropdown-toggle");
   if (!toggleBtn) return;
 

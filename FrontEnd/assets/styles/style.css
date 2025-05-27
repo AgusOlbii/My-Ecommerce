@@ -34,10 +34,85 @@ header section ul {
 .buttonNav:hover {
   transition: all 0.5s ease;
   transform: scale(1.1);
+  z-index: 1000;
 }
 .nav .fas {
   color: white;
 }
+.cart-button {
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #333;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+}
+
+/* Badge contador */
+.cart-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background-color: #e74c3c;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: bold;
+  pointer-events: none; /* que no interfiera con clicks */
+}
+
+/* Opcional: cuando el botón está en hover */
+.cart-button:hover {
+  color: #e74c3c;
+}
+
+/* Asegurar que el contenedor del carrito esté bien posicionado */
+.cart-container {
+  position: relative;
+  display: inline-block;
+}
+
+.cart-dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 120%;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 250px;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1000;
+  padding: 10px;
+}
+
+.cart-dropdown.show {
+  display: block;
+}
+
+.cart-dropdown ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cart-dropdown li {
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+}
+
 /* FOOTER TODAS LAS PAGINAS */
 .footer {
   background-color: #172018;
@@ -143,8 +218,7 @@ main {
 .productos-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-
-  margin-top: 20px;
+  gap: 2.5rem;
 }
 
 .productos-destacados h2 {
@@ -342,15 +416,12 @@ main {
   flex-direction: column;
   min-height: 100vh;
 }
-
 /* Main container */
 .ecommerce-main {
   flex: 1;
-  padding: 2rem;
-  background-color: #f9f9f9;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
+  width: 100vw;
+  padding: 0;
+  margin-top: 1.5rem;
 }
 
 /* Filtros (categoría + búsqueda) */
@@ -468,6 +539,20 @@ main {
   font-weight: 600;
   transition: background-color 0.3s ease;
 }
+/* Estilo para el boton de las card.  */
+.add-to-cart-btn {
+  width: 80%;
+  padding: 14px;
+  margin: 0 20px 0 20px;
+  background-color: #444; /* gris */
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 .card {
   border: 1px solid #ccc;
   padding: 10px;
@@ -500,6 +585,30 @@ main {
     align-items: stretch;
   }
 }
+
+/* ESTILOS PARA EL DROPDOWN CART */
+.description-dropdown-cart {
+  font-size: 19px;
+  color: #000000;
+}
+
+.go-to-cart-btn {
+  text-decoration: none;
+  width: 80%;
+  padding: 14px;
+  margin: 5px 20px 5px 20px;
+  background-color: #444; /* gris */
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  justify-content: center;
+}
+
 /* FIN DEL DISEÑO DE LA PAGINA DE PRODUCTOS */
 
 /* ESTILOS PARA LA UI DEL ADMIN */
@@ -610,8 +719,9 @@ form {
 }
 
 .admin-buttons {
+  margin-top: 0.5rem;
   display: flex;
-  gap: 10px;
+  gap: 1rem;
 }
 
 .icon-button {

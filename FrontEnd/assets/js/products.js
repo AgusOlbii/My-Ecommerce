@@ -313,17 +313,26 @@ productos.forEach((p) => {
     // mostrar productos no descatos en el apartado de productos
   } else if (!p.destacado && contenedor) {
     let cardHTML = `
-    <div class>
-         <a class="link-productos" href="productos/${p.nombre}">
+    <div> 
           <div class="product-card card">
+          <a class="link-productos" href="productos/${p.nombre}">
               <img src="${p.imagen}" alt="${p.nombre}">
               <h3>${p.nombre}</h3>
               <p class="price">$${p.precio}</p>
+              </a>
+              <button
+                class="add-to-cart-btn"
+                data-id="${p.id}"
+                data-nombre="${p.nombre}"
+                data-precio="${p.precio}"
+                data-imagen="${p.imagen}"
+              >
+                Agregar al carrito
+              </button>
           </div>
-        </a>
   `;
     // Si es admin, le agregamos los botones
-    if (usuarioLogueado.rol === "admin") {
+    if (usuarioLogueado && usuarioLogueado.rol === "admin") {
       cardHTML += `
       <div class="admin-buttons">
         <button class="icon-button eliminar" onclick="mostrarFormularioEliminar(${p.id})" title="Eliminar">

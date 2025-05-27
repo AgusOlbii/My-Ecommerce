@@ -1,4 +1,18 @@
 import { generarId } from "./products.js";
+// CREO UNA ALERTA PERSONALIZADA
+const alerta = document.createElement("div");
+alerta.textContent = "";
+alerta.style.position = "fixed";
+alerta.style.top = "50%";
+alerta.style.left = "50%";
+alerta.style.transform = "translate(-50%, -50%)";
+alerta.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+alerta.style.color = "white";
+alerta.style.padding = "20px 30px";
+alerta.style.borderRadius = "10px";
+alerta.style.zIndex = "9999";
+alerta.style.fontSize = "18px";
+alerta.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
 
 // Agregar un producto a la BASE DE DATOS (EN ESTE CASO LOCALSTORAGE)
 document.addEventListener("DOMContentLoaded", function () {
@@ -205,6 +219,110 @@ document.addEventListener("DOMContentLoaded", function () {
           }, 500); // debe coincidir con el tiempo de transición
         }, 3000); // Mostrado por 3 segundos
       }
+    });
+  }
+
+  //VERIFICAMOS SI EL ADMINISTRADOR ES SUPERADMIN O NO PARA MOSTRAR EL PANEL DE SUPERADMIN
+  const super_admin = document.getElementById("superAdmin");
+  const usuarioLogueado = JSON.parse(localStorage.getItem("usuarioLogueado"));
+  if (usuarioLogueado && usuarioLogueado.rol === "superAdmin") {
+    super_admin.innerHTML = `
+      <div class="admin-list-admins">
+        <h2>Asignar o eliminar Admins</h2>
+        <form id="formAdmins">
+          <input type="email" placeholder="Email del usuario" required />
+          <select>
+            <option value="asignar">Asignar rol de Admin</option>
+            <option value="eliminar">Eliminar rol de Admin</option>
+          </select>
+          <button type="submit">Aplicar</button>
+        </form>
+      </div>
+
+      <div class="admin-list-users">
+        <h2>Eliminar usuarios</h2>
+        <form id="formEliminarUsuario">
+          <input
+            type="email"
+            placeholder="Email del usuario a eliminar"
+            required
+          />
+          <button type="submit">Eliminar Usuario</button>
+        </form>
+      </div>
+    `;
+  }
+  // ASIGNAR O ELIMINAR ROL DE ADMIN
+  let users = JSON.parse(localStorage.getItem("usuarios"));
+  const formAdmins = document.getElementById("formAdmins");
+  if (formAdmins) {
+    formAdmins.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const email = this.querySelector("input").value.trim().toLowerCase();
+      const accion = this.querySelector("select").value;
+
+      const usuario = users.find((u) => u.email.toLowerCase() === email);
+
+      if (!usuario) {
+        alerta.textContent = "";
+        alerta.textContent = "Usuario No encontrado";
+        document.body.appendChild(alerta);
+        return;
+      }
+
+      if (accion === "asignar") {
+        if (usuario.rol === "admin") {
+          alerta.textContent = "";
+          alerta.textContent = "El usuario ya es Admin";
+          document.body.appendChild(alerta);
+        } else {
+          usuario.rol = "admin";
+          alerta.textContent = "";
+          alerta.textContent = "Rol de Admin asignado";
+          document.body.appendChild(alerta);
+        }
+      } else if (accion === "eliminar") {
+        if (usuario.rol === "admin") {
+          usuario.rol = "user";
+          alerta.textContent = "";
+          alerta.textContent = "Rol de admin eliminado";
+          document.body.appendChild(alerta);
+        } else {
+          alerta.textContent = "";
+          alerta.textContent = "El usuario no es admin";
+          document.body.appendChild(alerta);
+        }
+      }
+
+      localStorage.setItem("usuarios", JSON.stringify(users));
+      console.log(users);
+    });
+  }
+
+  //ELIMINAR USUARIOS
+  const formEliminarUsuario = document.getElementById("formEliminarUsuario");
+  if (formEliminarUsuario) {
+    formEliminarUsuario.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const email = this.querySelector("input").value.trim().toLowerCase();
+      const index = users.findIndex((u) => u.email.toLowerCase() === email);
+
+      if (index === -1) {
+        alerta.textContent = "";
+        alerta.textContent = "Usuario No encontrado";
+        document.body.appendChild(alerta);
+        return;
+      }
+
+      const eliminado = users.splice(index, 1)[0];
+      alerta.textContent = "";
+      alerta.textContent = `Usuario ${eliminado.nombre} eliminado correctamente.`;
+      document.body.appendChild(alerta);
+
+      localStorage.setItem("usuarios", JSON.stringify(users));
+      console.log(users);
     });
   }
 });

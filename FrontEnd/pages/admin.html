@@ -152,31 +152,7 @@
         </section>
 
         <!-- SOLO para Superadmin -->
-        <section class="grid-superadmin">
-          <div class="admin-list-admins">
-            <h2>Asignar o eliminar Admins</h2>
-            <form id="formAdmins">
-              <input type="email" placeholder="Email del usuario" required />
-              <select>
-                <option value="asignar">Asignar rol de Admin</option>
-                <option value="eliminar">Eliminar rol de Admin</option>
-              </select>
-              <button type="submit">Aplicar</button>
-            </form>
-          </div>
-
-          <div class="admin-list-users">
-            <h2>Eliminar usuarios</h2>
-            <form id="formEliminarUsuario">
-              <input
-                type="email"
-                placeholder="Email del usuario a eliminar"
-                required
-              />
-              <button type="submit">Eliminar Usuario</button>
-            </form>
-          </div>
-        </section>
+        <section id="superAdmin" class="grid-superadmin"></section>
       </section>
     </main>
     <!-- Footer para TODAS las paginas iguales.  -->
