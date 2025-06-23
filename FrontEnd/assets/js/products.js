@@ -1,131 +1,149 @@
-// Funcion para generar un ID unico para cada producto
-export function generarId() {
-  let ultimoId = localStorage.getItem("ultimoIdProducto") || 0;
-  ultimoId = Number(ultimoId) + 1;
-  localStorage.setItem("ultimoIdProducto", ultimoId);
-  return ultimoId;
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  const productosGuardados = localStorage.getItem("productos");
-
-  // Solo los guarda si no hay nada en localStorage todavía
-  if (!productosGuardados) {
-    const productos = [
-      {
-        id: generarId(),
-        nombre: "Producto 1",
-        precio: "100",
-        imagen: "../assets/img/ropa1.jpeg",
-        destacado: true,
-        categories: ["hombre", "remera"],
-      },
-      {
-        id: generarId(),
-        nombre: "Producto 2",
-        precio: "200",
-        imagen: "../assets/img/ropa2.jpeg",
-        destacado: true,
-        categories: ["mujer", "pantalon"],
-      },
-      {
-        id: generarId(),
-        nombre: "Producto 3",
-        precio: "150",
-        imagen: "../assets/img/ropa3.jpeg",
-        destacado: false,
-        categories: ["hombre", "buzo"],
-      },
-      {
-        id: generarId(),
-        nombre: "Producto 4",
-        precio: "180",
-        imagen: "../assets/img/ropa1.jpeg",
-        destacado: false,
-        categories: ["mujer", "remera"],
-      },
-      {
-        id: generarId(),
-        nombre: "Producto 5",
-        precio: "250",
-        imagen: "../assets/img/ropa2.jpeg",
-        destacado: true,
-        categories: ["hombre", "jeans"],
-      },
-      {
-        id: generarId(),
-        nombre: "Producto 6",
-        precio: "220",
-        imagen: "../assets/img/ropa3.jpeg",
-        destacado: false,
-        categories: ["mujer", "buzo"],
-      },
-      {
-        id: generarId(),
-        nombre: "Producto 4",
-        precio: "180",
-        imagen: "../assets/img/ropa1.jpeg",
-        destacado: false,
-        categories: ["mujer", "remera"],
-      },
-      {
-        id: generarId(),
-        nombre: "Producto 5",
-        precio: "250",
-        imagen: "../assets/img/ropa2.jpeg",
-        destacado: true,
-        categories: ["hombre", "jeans"],
-      },
-      {
-        id: generarId(),
-        nombre: "Producto 6",
-        precio: "220",
-        imagen: "../assets/img/ropa3.jpeg",
-        destacado: false,
-        categories: ["mujer", "buzo"],
-      },
-      {
-        id: generarId(),
-        nombre: "Producto 1",
-        precio: "100",
-        imagen: "../assets/img/ropa1.jpeg",
-        destacado: true,
-        categories: ["hombre", "remera"],
-      },
-      {
-        id: generarId(),
-        nombre: "Producto 2",
-        precio: "200",
-        imagen: "../assets/img/ropa2.jpeg",
-        destacado: true,
-        categories: ["mujer", "pantalon"],
-      },
-      {
-        id: generarId(),
-        nombre: "Producto 3",
-        precio: "150",
-        imagen: "../assets/img/ropa3.jpeg",
-        destacado: false,
-        categories: ["hombre", "buzo"],
-      },
-    ];
-
-    localStorage.setItem("productos", JSON.stringify(productos));
-    console.log("Productos iniciales guardados en localStorage.");
-  } else {
-    console.log("Ya hay productos guardados en localStorage.");
-  }
-});
-// Obtener los productos de localStorage
-const productosGuardados = localStorage.getItem("productos");
-// Convertir el string JSON a un objeto
-const productos = JSON.parse(productosGuardados);
-console.log("Productos guardados en localStorage:", productos);
+const API_URL = "http://127.0.0.1:5000";
 const contenedorDestacado = document.getElementById(
   "contenedor-productos-destacados"
-);
-const contenedor = document.getElementById("contenedor-productos");
-const usuarioLogueado = JSON.parse(localStorage.getItem("usuarioLogueado")); //Obtengo el usuario logueado
+); // Obtenemos el contenedor de los productos destacados
+const contenedor = document.getElementById("contenedor-productos"); // obtenemos el contenedor de los productos no destacados
+// Funcion asincrona para obtener los productos de la API
+export async function obtenerProductos() {
+  const API_URL = "http://127.0.0.1:5000"; // Define API_URL si no está ya definida globalmente aquí
+
+  try {
+    const res = await fetch(`${API_URL}/productos`);
+    if (!res.ok) {
+      throw new Error(
+        `Error al obtener productos: ${res.status} ${res.statusText}`
+      );
+    }
+    const productos = await res.json();
+    console.log("Productos obtenidos:", productos);
+    return productos; // Retorna los productos
+  } catch (error) {
+    console.error("Error al cargar productos:", error);
+    // Podrías devolver un array vacío o relanzar el error según tu estrategia
+    return error;
+  }
+}
+
+let productos = await obtenerProductos();
+// Funcion para mostrar los productos en el HTML
+export const mostrarProductos = (productos, usuarioLogueado) => {
+  console.log("Mostrando productos:", productos);
+  if (contenedor || contenedorDestacado) {
+    // Limpiamos los contenedores antes de mostrar los productos
+    if (contenedor) contenedor.innerHTML = "";
+    if (contenedorDestacado) contenedorDestacado.innerHTML = "";
+  } //SE VALIDA SI EXISTE ALGUN CONTENEDOR PARA VACIARLOS ANTES DE MOSTRAR LOS PRODUCTOS PARA EVITAR ERRORES
+  productos.forEach((p) => {
+    // Mostrar productos destacados
+    console.log("Imagen del producto:", p.imagen);
+    if (p.destacado && contenedorDestacado) {
+      contenedorDestacado.innerHTML = "";
+
+      let cardHTML = `
+    <div>
+         <a class="link-productos" href="productos/${p.nombre}">
+          <div class="product-card card">
+              <img src="${p.imagen}" alt="${p.nombre}">
+              <h3>${p.nombre}</h3>
+              <p class="price">$${p.precio}</p>
+          </div>
+        </a>
+  `;
+      // Si es admin, le agregamos los botones
+      console.log("Usuario logueado:", usuarioLogueado);
+      if (usuarioLogueado) {
+        if (
+          usuarioLogueado &&
+          (usuarioLogueado.rol === "admin" ||
+            usuarioLogueado.rol === "superadmin")
+        ) {
+          cardHTML += `
+      <div class="admin-buttons">
+        <button class="icon-button eliminar" onclick="mostrarFormularioEliminar(${p.id})" title="Eliminar">
+          <i class="fas fa-trash"></i>
+        </button>
+        <button class="icon-button actualizar" onclick="mostrarFormularioActualizar(${p.id})" title="Actualizar">
+          <i class="fas fa-pen-to-square"></i>
+        </button>
+      </div>
+    `;
+        }
+      }
+
+      // Cerramos el div
+      cardHTML += `</div>`;
+
+      contenedorDestacado.innerHTML += cardHTML;
+      // mostrar productos no descatos en el apartado de productos
+    } else if (!p.destacado && contenedor) {
+      let cardHTML = `
+    <div> 
+          <div class="product-card card">
+          <a class="link-productos" href="productos/${p.nombre}">
+              <img src="${p.imagen}" alt="${p.nombre}">
+              <h3>${p.nombre}</h3>
+              <p class="price">$${p.precio}</p>
+              </a>
+              <button
+                class="add-to-cart-btn"
+                data-id="${p.id}"
+                data-nombre="${p.nombre}"
+                data-precio="${p.precio}"
+                data-imagen="${p.imagen}"
+              >
+                Agregar al carrito
+              </button>
+          </div>
+  `;
+      console.log("Usuario logueado:", usuarioLogueado);
+      // Si es admin, le agregamos los botones
+      if (
+        usuarioLogueado &&
+        (usuarioLogueado.rol === "admin" ||
+          usuarioLogueado.rol === "superadmin")
+      ) {
+        cardHTML += `
+      <div class="admin-buttons">
+        <button class="icon-button eliminar" onclick="mostrarFormularioEliminar(${p.id})" title="Eliminar">
+          <i class="fas fa-trash"></i>
+        </button>
+        <button class="icon-button actualizar" onclick="mostrarFormularioActualizar(${p.id})" title="Actualizar">
+          <i class="fas fa-pen-to-square"></i>
+        </button>
+      </div>
+    `;
+      }
+
+      // Cerramos el div
+      cardHTML += `</div>`;
+
+      contenedor.innerHTML += cardHTML;
+    }
+  });
+};
+
+// Funcion para obtener los productos de la api una vez se elimino/actualizo/agrego un producto
+const obtenerYRenderizarProductos = async () => {
+  try {
+    const resp = await fetch(`${API_URL}/usuarios/actual`, {
+      method: "GET", // Es un GET
+      credentials: "include", // ¡CRÍTICO para que el navegador envíe la cookie 'session'!
+    });
+    const usuarioLogueado = await resp.json();
+    const productosActualizados = await fetch(
+      "http://127.0.0.1:5000/productos"
+    ).then((res) => res.json());
+    console.log("Productos traídos:", productosActualizados);
+    if (contenedor) contenedor.innerHTML = "";
+    if (contenedorDestacado) contenedorDestacado.innerHTML = "";
+    productos = productosActualizados;
+    mostrarProductos(productos, usuarioLogueado);
+  } catch (error) {
+    console.error("Error al traer productos:", error);
+  }
+};
+
+console.log("Productos traidos de la API: ", productos);
 
 // funcion para mostrar el formulario de ELIMINAR CUANDO EL USUARIO ES ADMIN
 window.mostrarFormularioEliminar = (idProducto) => {
@@ -147,23 +165,51 @@ window.mostrarFormularioEliminar = (idProducto) => {
 
   document
     .getElementById("formEliminarProducto")
-    .addEventListener("submit", (e) => {
+    .addEventListener("submit", async (e) => {
       e.preventDefault();
-      eliminarProducto(idProducto);
+      const ok = await eliminarProducto(idProducto); // Esperamos confirmación
+
+      if (ok) {
+        newForm.innerHTML = ""; // Cerramos el modal si la eliminación fue exitosa
+      } else {
+        document.getElementById("aviso-eliminar").textContent =
+          "Hubo un error al eliminar el producto.";
+      }
     });
+
+  // Al hacer click en la X
   document.getElementById("cerrarEliminar").addEventListener("click", () => {
     newForm.innerHTML = "";
   });
 };
-const eliminarProducto = (id) => {
-  const productos = JSON.parse(localStorage.getItem("productos")) || [];
+// FUNCION PARA ELIMINAR UN PRODUCTO
+export const eliminarProducto = async (id) => {
+  try {
+    const respuesta = await fetch(`http://127.0.0.1:5000/productos/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
 
-  const nuevoArray = productos.filter((p) => Number(p.id) !== id);
-  localStorage.setItem("productos", JSON.stringify(nuevoArray));
-  const newForm = document.getElementById("newForm");
-  console.log(productos);
-  newForm.innerHTML = ``;
+    if (respuesta.ok) {
+      // Opcional: puedes volver a cargar los productos desde el backend
+      console.log(productos);
+      // Actualiza la vista: por ejemplo, vuelve a renderizar la lista
+      await obtenerYRenderizarProductos();
+      return true;
+      // esta función debe volver a hacer GET al backend
+    } else {
+      alert("No se pudo eliminar el producto");
+      return false;
+    }
+  } catch (error) {
+    console.error("Error al eliminar:", error);
+    alert("Error de conexión");
+  }
 };
+
 // FUNCION PARA MOSTRAR EL FORMULARIO DE ACTUALIZAR CUANDO EL USUARIO ES ADMIN
 window.mostrarFormularioActualizar = (idProducto) => {
   const producto = productos.find((p) => p.id === idProducto);
@@ -218,26 +264,8 @@ window.mostrarFormularioActualizar = (idProducto) => {
       actualizarProducto(idProducto);
     });
 };
-const actualizarProducto = (id) => {
-  const productos = JSON.parse(localStorage.getItem("productos")) || [];
-
-  const producto = productos.find((p) => Number(p.id) === id);
-
-  if (!producto) {
-    const msg = document.getElementById("aviso-actualizar");
-    msg.style.display = "block";
-    msg.innerHTML = `<h2 class="producto-no-encontrado">¡Producto no encontrado!</h2>`;
-    msg.classList.add("visible");
-    setTimeout(() => {
-      msg.classList.remove("visible");
-      setTimeout(() => {
-        msg.style.display = "none";
-      }, 500);
-    }, 3000);
-    return;
-  }
-
-  // Obtenemos valores del formulario
+export const actualizarProducto = async (id) => {
+  // Obtener valores del formulario
   const nuevoNombre = document.getElementById("nombreActualizado").value.trim();
   const nuevoPrecio = document.getElementById("precioActualizado").value.trim();
   const nuevaCategoria = document
@@ -251,106 +279,61 @@ const actualizarProducto = (id) => {
     "destacadoActualizado"
   ).checked;
 
-  // Actualizamos solo si hay valor
-  if (nuevoNombre) producto.nombre = nuevoNombre;
-  if (nuevoPrecio) producto.precio = nuevoPrecio;
-  if (nuevaCategoria) producto.categoria = nuevaCategoria; // fijate que antes usabas `categories`
-  if (nuevaDescripcion) producto.descripcion = nuevaDescripcion;
-  if (nuevaImagen) producto.imagen = nuevaImagen;
+  // Construir objeto con los campos a actualizar (solo los que tengan valor)
+  const datosActualizacion = { destacado: nuevoDestacado };
+  if (nuevoNombre) datosActualizacion.nombre = nuevoNombre;
+  if (nuevoPrecio && !isNaN(Number(nuevoPrecio)))
+    datosActualizacion.precio = Number(nuevoPrecio);
+  if (nuevaCategoria) datosActualizacion.categoria = nuevaCategoria;
+  if (nuevaDescripcion) datosActualizacion.descripcion = nuevaDescripcion;
+  if (nuevaImagen) datosActualizacion.imagen = nuevaImagen;
 
-  producto.destacado = nuevoDestacado;
-
-  localStorage.setItem("productos", JSON.stringify(productos));
-
-  // Mostrar mensaje de éxito
-  const msg = document.getElementById("aviso-actualizar");
-  msg.style.display = "block";
-  msg.innerHTML = `<h2 class="producto-encontrado">¡Actualizado con éxito!</h2>`;
-  msg.classList.add("visible");
-
-  setTimeout(() => {
-    msg.classList.remove("visible");
-    setTimeout(() => {
-      msg.style.display = "none";
-      document.getElementById("newForm").innerHTML = "";
-    }, 500);
-  }, 3000);
-};
-// Mostrar productos
-productos.forEach((p) => {
-  // Mostrar productos destacados
-  if (p.destacado && contenedorDestacado) {
-    let cardHTML = `
-    <div>
-         <a class="link-productos" href="productos/${p.nombre}">
-          <div class="product-card card">
-              <img src="${p.imagen}" alt="${p.nombre}">
-              <h3>${p.nombre}</h3>
-              <p class="price">$${p.precio}</p>
-          </div>
-        </a>
-  `;
-    // Si es admin, le agregamos los botones
-    if (usuarioLogueado) {
-      if (usuarioLogueado.rol === "admin") {
-        cardHTML += `
-      <div class="admin-buttons">
-        <button class="icon-button eliminar" onclick="mostrarFormularioEliminar(${p.id})" title="Eliminar">
-          <i class="fas fa-trash"></i>
-        </button>
-        <button class="icon-button actualizar" onclick="mostrarFormularioActualizar(${p.id})" title="Actualizar">
-          <i class="fas fa-pen-to-square"></i>
-        </button>
-      </div>
-    `;
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:5000/productos/actualizar/${id}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(datosActualizacion),
       }
+    );
+
+    if (!response.ok) {
+      throw new Error("Error al actualizar producto");
     }
-
-    // Cerramos el div
-    cardHTML += `</div>`;
-
-    contenedorDestacado.innerHTML += cardHTML;
-    // mostrar productos no descatos en el apartado de productos
-  } else if (!p.destacado && contenedor) {
-    let cardHTML = `
-    <div> 
-          <div class="product-card card">
-          <a class="link-productos" href="productos/${p.nombre}">
-              <img src="${p.imagen}" alt="${p.nombre}">
-              <h3>${p.nombre}</h3>
-              <p class="price">$${p.precio}</p>
-              </a>
-              <button
-                class="add-to-cart-btn"
-                data-id="${p.id}"
-                data-nombre="${p.nombre}"
-                data-precio="${p.precio}"
-                data-imagen="${p.imagen}"
-              >
-                Agregar al carrito
-              </button>
-          </div>
-  `;
-    // Si es admin, le agregamos los botones
-    if (usuarioLogueado && usuarioLogueado.rol === "admin") {
-      cardHTML += `
-      <div class="admin-buttons">
-        <button class="icon-button eliminar" onclick="mostrarFormularioEliminar(${p.id})" title="Eliminar">
-          <i class="fas fa-trash"></i>
-        </button>
-        <button class="icon-button actualizar" onclick="mostrarFormularioActualizar(${p.id})" title="Actualizar">
-          <i class="fas fa-pen-to-square"></i>
-        </button>
-      </div>
-    `;
+    // Después de actualizar, podés recargar la lista de productos desde el backend
+    await obtenerYRenderizarProductos();
+    // Cerramos el modal
+    const newForm = document.getElementById("newForm");
+    if (newForm) {
+      newForm.innerHTML = "";
     }
+    // Creamos un div para informar si se ha actualizado correctamente
+    const mensaje = document.createElement("div");
+    mensaje.classList.add("modal-backdrop");
+    mensaje.innerHTML = `<h2 class="producto-encontrado">¡Producto actualizado con éxito!</h2>`;
 
-    // Cerramos el div
-    cardHTML += `</div>`;
+    document.body.appendChild(mensaje);
+    requestAnimationFrame(() => mensaje.classList.add("visible"));
 
-    contenedor.innerHTML += cardHTML;
+    setTimeout(() => {
+      mensaje.remove();
+    }, 3000);
+  } catch (error) {
+    console.error(error);
+
+    const mensaje = document.createElement("div");
+    mensaje.classList.add("modal-backdrop");
+    mensaje.innerHTML = `<h2 class="producto-error">❌ No se pudo actualizar el producto</h2>`;
+
+    document.body.appendChild(mensaje);
+    requestAnimationFrame(() => mensaje.classList.add("visible"));
+
+    setTimeout(() => {
+      mensaje.remove();
+    }, 3000);
   }
-});
+};
 
 // FILTRAR PRODUCTOS
 const checkboxes = document.querySelectorAll(".category-checkbox");

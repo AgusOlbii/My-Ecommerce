@@ -1,19 +1,32 @@
 import { inicializarLogin, inicializarRegistro, cambiarUi } from "./auth.js";
 
 // Mantener UI segun estado del usuario
-document.addEventListener("DOMContentLoaded", () => {
-  const userLogueado = JSON.parse(localStorage.getItem("usuarioLogueado"));
-  console.log("Chequeando estado del ususario");
-  if (userLogueado) {
-    console.log("Sesion iniciada");
-    cambiarUi(true, userLogueado.rol);
-  } else {
-    console.log("Sesion no iniciada");
+document.addEventListener("DOMContentLoaded", async () => {
+  console.log("Chequeando estado del usuario");
+  try {
+    const response = await fetch("http://127.0.0.1:5000/usuarios/actual", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include", // importante para enviar cookies
+    });
+    console.log("Respuesta del servidor:", response);
+    if (response.ok) {
+      const data = await response.json();
+      console.log("Sesión activa detectada:", data.usuario);
+      cambiarUi(true, data.usuario.rol);
+    } else {
+      console.log("Sesión no activa");
+      cambiarUi(false);
+    }
+  } catch (error) {
+    console.error("Error al verificar sesión:", error);
     cambiarUi(false);
   }
 });
 
-async function cargarModal(rutaHtml) {
+export async function cargarModal(rutaHtml) {
   const contenedor = document.getElementById("modal-container");
   const respuesta = await fetch(rutaHtml);
   const html = await respuesta.text();
@@ -52,10 +65,11 @@ async function cargarModal(rutaHtml) {
     }
   });
 }
-
-document.getElementById("loginBtn").addEventListener("click", async () => {
-  if (!document.getElementById("modal")) {
-    await cargarModal("../pages/login.html");
-  }
-});
+if (document.getElementById("loginBtn")) {
+  document.getElementById("loginBtn").addEventListener("click", async () => {
+    if (!document.getElementById("modal")) {
+      await cargarModal("../pages/login.html");
+    }
+  });
+}
 console.log("Modal.js cargado");

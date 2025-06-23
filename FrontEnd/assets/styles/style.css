@@ -5,7 +5,8 @@ body {
   padding: 0;
   cursor: default;
 }
-/* HEADER TODAS LAS PAGINAS */
+
+/* --- HEADER TODAS LAS PAGINAS --- */
 header {
   background-color: #000000d9;
   color: white;
@@ -13,11 +14,15 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
 }
+
 header h1 {
   margin: 0;
   padding: 0 0 0 60px;
+  font-size: 28px; /* Tamaño de fuente para desktop */
 }
+
 header section ul {
   list-style-type: none;
   margin: 0;
@@ -25,20 +30,24 @@ header section ul {
   display: flex;
   gap: 20px;
 }
+
 .buttonNav {
   color: white;
   border: none;
   cursor: pointer;
   text-decoration: none;
 }
+
 .buttonNav:hover {
   transition: all 0.5s ease;
   transform: scale(1.1);
   z-index: 1000;
 }
+
 .nav .fas {
   color: white;
 }
+
 .cart-button {
   position: relative;
   background: none;
@@ -62,7 +71,7 @@ header section ul {
   padding: 2px 6px;
   font-size: 12px;
   font-weight: bold;
-  pointer-events: none; /* que no interfiera con clicks */
+  pointer-events: none;
 }
 
 /* Opcional: cuando el botón está en hover */
@@ -113,7 +122,7 @@ header section ul {
   color: #888;
 }
 
-/* FOOTER TODAS LAS PAGINAS */
+/* --- FOOTER TODAS LAS PAGINAS --- */
 .footer {
   background-color: #172018;
   color: white;
@@ -128,13 +137,14 @@ header section ul {
   display: flex;
   justify-content: space-around;
   width: 100%;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* Permite que las secciones se envuelvan */
   gap: 40px;
 }
 
 .footer-info,
 .footer-social {
   max-width: 300px;
+  text-align: center; /* Centrar texto para pantallas más pequeñas */
 }
 
 .footer-info h3,
@@ -184,7 +194,7 @@ header section ul {
   color: #81c784;
 }
 
-/* Main pagina principal */
+/* --- Main pagina principal --- */
 main {
   display: flex;
   flex-direction: column;
@@ -192,17 +202,22 @@ main {
   justify-content: center;
   padding: 20px;
 }
+
 .carrusel {
   position: relative;
   max-width: 800px;
+  width: 100%;
   justify-content: center;
   align-items: center;
+  margin-bottom: 30px;
 }
+
 .d-block {
-  width: 800px;
+  width: 100%;
   height: 250px;
   object-fit: cover;
 }
+
 .title-carrusel {
   text-align: center;
   font-size: 24px;
@@ -213,23 +228,34 @@ main {
   top: 30%;
   left: 50%;
   z-index: 1;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px 20px;
+  white-space: nowrap;
 }
+
 /* Estilos para las card de productos */
 .productos-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2.5rem;
+  width: 100%; /* Asegura que la grilla ocupe el ancho completo */
+  max-width: 1200px; /* Limita el ancho máximo para pantallas grandes */
 }
 
 .productos-destacados h2 {
   text-align: center;
   margin-top: 20px;
+  font-size: 2em; /* Ajuste para desktop */
 }
+
 .productos-destacados {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
+
 .link-productos {
   text-decoration: none;
   margin: 10px;
@@ -237,7 +263,7 @@ main {
 
 /* FIN DEL DISEÑO DE DE LA PAGINA PRINCIPAL */
 
-/* LOGIN Y REGISTER */
+/* --- LOGIN Y REGISTER --- */
 
 /* Fondo difuminado */
 .custom-modal {
@@ -246,8 +272,8 @@ main {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.7); /* fondo negro semitransparente */
-  backdrop-filter: blur(5px); /* difumina lo que hay detrás */
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -256,8 +282,8 @@ main {
 
 /* Contenedor del modal */
 .custom-modal .modal-content {
-  background-color: #121212; /* negro muy oscuro */
-  color: #eee; /* texto blanco grisáceo */
+  background-color: #121212;
+  color: #eee;
   padding: 30px 40px;
   border-radius: 12px;
   width: 90%;
@@ -265,6 +291,7 @@ main {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.9);
   position: relative;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box; /* Asegura que padding no aumente el ancho total */
 }
 
 /* Botón cerrar */
@@ -275,12 +302,12 @@ main {
   font-size: 28px;
   font-weight: bold;
   cursor: pointer;
-  color: #bbb; /* gris claro */
+  color: #bbb;
   transition: color 0.3s ease;
 }
 
 .custom-modal .close:hover {
-  color: #fff; /* blanco */
+  color: #fff;
 }
 
 /* Título */
@@ -302,7 +329,7 @@ main {
   margin-bottom: 20px;
   border: none;
   border-radius: 8px;
-  background-color: #2c2c2c; /* gris oscuro */
+  background-color: #2c2c2c;
   color: #eee;
   font-size: 16px;
   box-sizing: border-box;
@@ -311,21 +338,21 @@ main {
 
 .custom-modal input[type="email"]::placeholder,
 .custom-modal input[type="password"]::placeholder {
-  color: #888; /* gris medio */
+  color: #888;
 }
 
 .custom-modal input[type="email"]:focus,
 .custom-modal input[type="password"]:focus {
-  background-color: #3a3a3a; /* gris medio oscuro */
+  background-color: #3a3a3a;
   outline: none;
-  box-shadow: 0 0 8px #999; /* sombra gris */
+  box-shadow: 0 0 8px #999;
 }
 
 /* Botón login */
 .custom-modal button[type="submit"] {
   width: 100%;
   padding: 14px;
-  background-color: #444; /* gris */
+  background-color: #444;
   border: none;
   border-radius: 8px;
   color: #fff;
@@ -336,7 +363,7 @@ main {
 }
 
 .custom-modal button[type="submit"]:hover {
-  background-color: #666; /* gris más claro */
+  background-color: #666;
 }
 /* Boton login una vez iniciado sesion */
 #dropdownBtn {
@@ -364,7 +391,7 @@ main {
   position: absolute;
   background-color: #f9f9f9;
   min-width: 160px;
-  right: 0; /* para que se abra hacia la izquierda */
+  right: 0;
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
   z-index: 1000;
   border-radius: 5px;
@@ -387,7 +414,7 @@ main {
   margin-top: 20px;
   font-size: 14px;
   text-align: center;
-  color: #aaa; /* gris claro */
+  color: #aaa;
 }
 
 .custom-modal p button {
@@ -409,7 +436,7 @@ main {
 
 /* FIN DEL LOGIN Y REGISTER */
 
-/* DISEÑO DE LA PAGINA DE PRODUCTOS */
+/* --- DISEÑO DE LA PAGINA DE PRODUCTOS --- */
 
 .products-body {
   display: flex;
@@ -422,6 +449,7 @@ main {
   width: 100vw;
   padding: 0;
   margin-top: 1.5rem;
+  box-sizing: border-box;
 }
 
 /* Filtros (categoría + búsqueda) */
@@ -429,6 +457,10 @@ main {
   display: flex;
   gap: 1rem;
   margin-bottom: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 .dropdown {
@@ -444,6 +476,8 @@ main {
   border-radius: 6px;
   cursor: pointer;
   font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .dropdown-toggle:hover {
@@ -481,12 +515,18 @@ main {
   cursor: pointer;
 }
 
+.search-bar {
+  width: 100%;
+  max-width: 250px;
+}
+
 .search-bar input {
   padding: 0.5rem 1rem;
   border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 1rem;
-  width: 250px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .no-results {
@@ -513,6 +553,8 @@ main {
 .product-card img {
   width: 100%;
   height: auto;
+  max-height: 200px; /* Limitar la altura máxima de la imagen */
+  object-fit: cover; /* Asegurarrr que la imagen cubra el área sin distorsionarse */
   border-radius: 8px;
   margin-bottom: 1rem;
 }
@@ -539,12 +581,12 @@ main {
   font-weight: 600;
   transition: background-color 0.3s ease;
 }
-/* Estilo para el boton de las card.  */
+/* Estilo para el boton de las card. */
 .add-to-cart-btn {
   width: 80%;
   padding: 14px;
   margin: 0 20px 0 20px;
-  background-color: #444; /* gris */
+  background-color: #444;
   border: none;
   border-radius: 8px;
   color: #fff;
@@ -574,18 +616,6 @@ main {
   display: none;
   background-color: red;
 }
-/* Responsivo */
-@media (max-width: 600px) {
-  .search-bar input {
-    width: 100%;
-  }
-
-  .filters {
-    flex-direction: column;
-    align-items: stretch;
-  }
-}
-
 /* ESTILOS PARA EL DROPDOWN CART */
 .description-dropdown-cart {
   font-size: 19px;
@@ -597,7 +627,7 @@ main {
   width: 80%;
   padding: 14px;
   margin: 5px 20px 5px 20px;
-  background-color: #444; /* gris */
+  background-color: #444;
   border: none;
   border-radius: 8px;
   color: #fff;
@@ -611,7 +641,7 @@ main {
 
 /* FIN DEL DISEÑO DE LA PAGINA DE PRODUCTOS */
 
-/* ESTILOS PARA LA UI DEL ADMIN */
+/* --- ESTILOS PARA LA UI DEL ADMIN --- */
 
 /* Contenedor principal */
 .admin-panel {
@@ -623,6 +653,8 @@ main {
   background-color: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  box-sizing: border-box;
 }
 
 /* Título principal */
@@ -668,6 +700,7 @@ form {
   border-radius: 6px;
   border: 1px solid #ccc;
   transition: border-color 0.3s, box-shadow 0.3s;
+  box-sizing: border-box;
 }
 
 .admin-panel input:focus,
@@ -738,7 +771,7 @@ form {
 }
 
 .icon-button i {
-  pointer-events: none; /* para evitar que el clic se lo lleve el ícono */
+  pointer-events: none;
 }
 
 .icon-button.eliminar {
@@ -753,10 +786,254 @@ form {
   background-color: #dcdcdc;
   transform: scale(1.1);
 }
+/* ESTILO PARA MENSAJE DE ACTUALIZAR */
+.modal-backdrop {
+  position: fixed;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%); /* Centrado horizontal */
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  z-index: 10000;
+  font-size: 1rem;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(217, 78, 78, 0.2);
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+  text-align: center;
+  min-width: 200px;
+  max-width: 400px;
+  max-height: 100px;
+}
 
-/* Responsive */
-@media (max-width: 992px) {
+.modal-backdrop.visible {
+  opacity: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: #00000056;
+}
+
+/* --- Media Queries para hacer el diseño responsive --- */
+
+/* Extra Small devices (teléfonos pequeños, 320px y arriba) */
+@media (max-width: 480px) {
+  header {
+    flex-direction: column;
+    padding: 10px;
+  }
+  header h1 {
+    padding: 0;
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  header section ul {
+    padding: 0;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .buttonNav {
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+  .cart-button {
+    font-size: 18px;
+    padding: 0 5px;
+  }
+  .cart-count {
+    top: -4px;
+    right: -4px;
+    padding: 1px 5px;
+    font-size: 10px;
+  }
+
+  .footer-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .footer-info,
+  .footer-social {
+    max-width: 100%;
+    padding: 0 10px;
+  }
+  .footer-info h3,
+  .footer-social h3 {
+    font-size: 18px;
+  }
+  .footer-bottom {
+    font-size: 12px;
+  }
+
+  .d-block {
+    height: 150px; /* Reduce la altura del carrusel para móviles */
+  }
+  .title-carrusel {
+    font-size: 18px;
+    padding: 8px 15px;
+  }
+
+  .productos-grid {
+    grid-template-columns: 1fr; /* Una columna para móviles */
+    gap: 1.5rem;
+  }
+
+  .product-card {
+    padding: 1rem;
+  }
+  .product-card img {
+    max-height: 150px;
+  }
+
+  .custom-modal .modal-content {
+    padding: 20px;
+  }
+  .custom-modal h2 {
+    font-size: 20px;
+  }
+  .custom-modal input,
+  .custom-modal button[type="submit"] {
+    font-size: 14px;
+    padding: 10px;
+  }
+  .custom-modal p {
+    font-size: 12px;
+  }
+
+  .filters {
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 0 15px;
+  }
+  .dropdown-toggle,
+  .search-bar input {
+    font-size: 14px;
+    padding: 8px 15px;
+  }
+
   .admin-panel {
-    grid-template-columns: 1fr;
+    padding: 15px;
+    gap: 15px;
+    margin: 15px;
+  }
+  .admin-title {
+    font-size: 1.5rem;
+  }
+  .admin-panel h2 {
+    font-size: 1.1rem;
+  }
+  .admin-panel input,
+  .admin-panel textarea,
+  .admin-panel select,
+  .admin-panel button {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+  .icon-button {
+    padding: 8px;
+    font-size: 14px;
+  }
+  .modal-backdrop {
+    top: 10px;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    padding: 0.8rem 1.5rem;
+    min-width: unset;
+    max-width: 90%;
+  }
+}
+
+/* Small devices (tablets en modo retrato, 481px a 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  header {
+    padding: 10px 20px;
+  }
+  header h1 {
+    font-size: 26px;
+    padding: 0 0 0 20px;
+  }
+  header section ul {
+    padding: 0 20px 0 0;
+    gap: 15px;
+  }
+
+  .footer-section {
+    gap: 30px;
+    justify-content: center;
+  }
+  .footer-info,
+  .footer-social {
+    max-width: 45%;
+    text-align: left;
+  }
+
+  .d-block {
+    height: 200px; /* Altura intermedia para tablets */
+  }
+  .title-carrusel {
+    font-size: 20px;
+  }
+
+  .productos-grid {
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas para tablets */
+    gap: 2rem;
+  }
+
+  .product-card img {
+    max-height: 180px;
+  }
+
+  .filters {
+    flex-direction: row;
+    justify-content: center;
+    padding: 0 30px;
+  }
+  .search-bar {
+    max-width: 300px;
+  }
+
+  .admin-panel {
+    grid-template-columns: 1fr 1fr; /* Dos columnas para admin en tablets */
+    margin: 20px;
+  }
+  .admin-title {
+    grid-column: 1 / -1;
+  }
+  .grid-superadmin {
+    grid-column: 1 / -1;
+  }
+  .modal-backdrop {
+    top: 20px;
+    transform: translateX(-50%);
+  }
+}
+
+/* Medium devices (tablets en modo paisaje y laptops, 769px a 992px) */
+@media (min-width: 769px) and (max-width: 992px) {
+  header h1 {
+    font-size: 30px;
+    padding: 0 0 0 40px;
+  }
+  header section ul {
+    padding: 0 40px 0 0;
+  }
+
+  .productos-grid {
+    gap: 2.5rem;
+  }
+  .product-card img {
+    max-height: 200px;
+  }
+
+  .admin-panel {
+    grid-template-columns: 2fr 2fr 1.5fr;
+  }
+  .admin-title {
+    grid-column: 1 / -1;
+  }
+  .grid-superadmin {
+    grid-column: auto;
   }
 }
