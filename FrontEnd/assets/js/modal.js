@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       headers: {
         "Content-Type": "application/json",
       },
-      credentials: "include", // importante para enviar cookies
+      credentials: "include",
     });
     console.log("Respuesta del servidor:", response);
     if (response.ok) {

@@ -1,23 +1,39 @@
-class Producto:
-    _id_counter = 1
+# Importa el objeto 'db' desde extensions.py
+from extensions  import db
+from sqlalchemy import Enum # Para asegurar que Enum se importe correctamente si no lo estaba
 
-    def __init__(self, imagen, nombre, descripcion, precio, stock, destacado=False):
-        self.id = Producto._id_counter
-        Producto._id_counter += 1
+class Producto(db.Model):
+    # __tablename__ = 'productos'
+
+    id = db.Column(db.Integer, primary_key=True)
+    imagen = db.Column(db.String(255), nullable=False)
+    nombre = db.Column(db.String(100), nullable=False)
+    descripcion = db.Column(db.Text, nullable=True)
+    precio = db.Column(db.Float, nullable=False)
+    stock = db.Column(db.Integer, default=0, nullable=False)
+    destacado = db.Column(db.Boolean, default=False, nullable=False)
+    categoria = db.Column(db.String(50), nullable=True)
+
+    def __init__(self, imagen, nombre, descripcion, precio, stock= 0, categoria=None, destacado=False):
         self.imagen = imagen
         self.nombre = nombre
         self.descripcion = descripcion
         self.precio = precio
         self.stock = stock
+        self.categoria = categoria
         self.destacado = destacado
+
+    def __repr__(self):
+        return f'<Producto {self.id}: {self.nombre}>'
 
     def to_dict(self):
         return {
             "id": self.id,
-            "imagen": f"{self.imagen}",
+            "imagen": self.imagen,
             "nombre": self.nombre,
             "descripcion": self.descripcion,
             "precio": self.precio,
             "stock": self.stock,
-            "destacado": self.destacado
+            "destacado": self.destacado,
+            "categoria": self.categoria
         }

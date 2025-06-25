@@ -55,7 +55,7 @@ export const mostrarProductos = (productos, usuarioLogueado) => {
         if (
           usuarioLogueado &&
           (usuarioLogueado.rol === "admin" ||
-            usuarioLogueado.rol === "superadmin")
+            usuarioLogueado.rol === "superAdmin")
         ) {
           cardHTML += `
       <div class="admin-buttons">
@@ -100,7 +100,7 @@ export const mostrarProductos = (productos, usuarioLogueado) => {
       if (
         usuarioLogueado &&
         (usuarioLogueado.rol === "admin" ||
-          usuarioLogueado.rol === "superadmin")
+          usuarioLogueado.rol === "superAdmin")
       ) {
         cardHTML += `
       <div class="admin-buttons">
@@ -295,6 +295,7 @@ export const actualizarProducto = async (id) => {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(datosActualizacion),
+        credentials: "include",
       }
     );
 

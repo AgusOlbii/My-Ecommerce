@@ -47,6 +47,7 @@ if (form_agregar) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(nuevoProducto),
+        credentials: "include",
       });
 
       if (!response.ok) {
@@ -127,11 +128,13 @@ if (form_actualizar) {
 //VERIFICAMOS SI EL ADMINISTRADOR ES SUPERADMIN O NO PARA MOSTRAR EL PANEL DE SUPERADMIN
 const super_admin = document.getElementById("superAdmin");
 const resp = await fetch(`${API_URL}/usuarios/actual`, {
-  method: "GET", // Es un GET
-  credentials: "include", // ¡CRÍTICO para que el navegador envíe la cookie 'session'!
+  method: "GET",
+  credentials: "include",
 });
+console.log("Respuesta cruda de /usuarios/actual:", resp);
 const usuarioLogueado = await resp.json();
-if (usuarioLogueado && usuarioLogueado.rol === "superAdmin") {
+
+if (usuarioLogueado && usuarioLogueado.usuario.rol === "superAdmin") {
   super_admin.innerHTML = `
       <div class="admin-list-admins">
         <h2>Asignar o eliminar Admins</h2>
@@ -180,7 +183,7 @@ if (formAdmins) {
         },
         body: JSON.stringify({
           email,
-          accion, // "asignar" o "eliminar"
+          accion,
         }),
       });
 

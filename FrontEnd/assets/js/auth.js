@@ -1,6 +1,6 @@
 import { mostrarProductos, obtenerProductos } from "./products.js";
 import { cargarModal } from "./modal.js";
-const API_URL = "http://127.0.0.1:5000"; // Cambia si tu backend está en otro lado
+const API_URL = "http://127.0.0.1:5000";
 
 let productos = await obtenerProductos();
 let usuarioLogueado = null;
@@ -87,7 +87,7 @@ export function cambiarUi(access, rol) {
     });
 
     // Mostrar panel admin si el usuario tiene rol admin o superAdmin
-    if (rol === "admin" || rol === "superadmin") {
+    if (rol === "admin" || rol === "superAdmin") {
       const adminLink = document.createElement("a");
       adminLink.href = "../pages/admin.html";
       adminLink.textContent = "Panel de administración";
@@ -96,7 +96,7 @@ export function cambiarUi(access, rol) {
 
     console.log("--------CAMBIO DE UI------------");
   } else {
-    // 🔁 Código para mostrar botón de "Iniciar sesión" nuevamente
+    // Código para mostrar botón de "Iniciar sesión" nuevamente
     loginBtn.innerHTML = `
       <li id="login" class="buttonNav">
             <a id="loginBtn"><i class="fas fa-user"></i></a>
