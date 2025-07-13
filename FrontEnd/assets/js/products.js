@@ -5,8 +5,6 @@ const contenedorDestacado = document.getElementById(
 const contenedor = document.getElementById("contenedor-productos"); // obtenemos el contenedor de los productos no destacados
 // Funcion asincrona para obtener los productos de la API
 export async function obtenerProductos() {
-  const API_URL = "http://127.0.0.1:5000"; // Define API_URL si no está ya definida globalmente aquí
-
   try {
     const res = await fetch(`${API_URL}/productos`);
     if (!res.ok) {
@@ -19,7 +17,7 @@ export async function obtenerProductos() {
     return productos; // Retorna los productos
   } catch (error) {
     console.error("Error al cargar productos:", error);
-    // Podrías devolver un array vacío o relanzar el error según tu estrategia
+
     return error;
   }
 }
@@ -29,16 +27,13 @@ let productos = await obtenerProductos();
 export const mostrarProductos = (productos, usuarioLogueado) => {
   console.log("Mostrando productos:", productos);
   if (contenedor || contenedorDestacado) {
-    // Limpiamos los contenedores antes de mostrar los productos
     if (contenedor) contenedor.innerHTML = "";
     if (contenedorDestacado) contenedorDestacado.innerHTML = "";
-  } //SE VALIDA SI EXISTE ALGUN CONTENEDOR PARA VACIARLOS ANTES DE MOSTRAR LOS PRODUCTOS PARA EVITAR ERRORES
+  }
   productos.forEach((p) => {
     // Mostrar productos destacados
     console.log("Imagen del producto:", p.imagen);
     if (p.destacado && contenedorDestacado) {
-      contenedorDestacado.innerHTML = "";
-
       let cardHTML = `
     <div>
          <a class="link-productos" href="productos/${p.nombre}">
@@ -95,7 +90,6 @@ export const mostrarProductos = (productos, usuarioLogueado) => {
               </button>
           </div>
   `;
-      console.log("Usuario logueado:", usuarioLogueado);
       // Si es admin, le agregamos los botones
       if (
         usuarioLogueado &&

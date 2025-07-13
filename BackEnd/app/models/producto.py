@@ -1,10 +1,8 @@
 # Importa el objeto 'db' desde extensions.py
 from extensions  import db
-from sqlalchemy import Enum # Para asegurar que Enum se importe correctamente si no lo estaba
+from sqlalchemy import Enum 
 
 class Producto(db.Model):
-    # __tablename__ = 'productos'
-
     id = db.Column(db.Integer, primary_key=True)
     imagen = db.Column(db.String(255), nullable=False)
     nombre = db.Column(db.String(100), nullable=False)

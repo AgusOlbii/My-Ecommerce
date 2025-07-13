@@ -1,15 +1,39 @@
 import { mostrarProductos, obtenerProductos } from "./products.js";
 import { cargarModal } from "./modal.js";
 const API_URL = "http://127.0.0.1:5000";
+const alerta = document.createElement("div");
+alerta.textContent = "";
+alerta.style.position = "fixed";
+alerta.style.top = "50%";
+alerta.style.left = "50%";
+alerta.style.transform = "translate(-50%, -50%)";
+alerta.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+alerta.style.color = "white";
+alerta.style.padding = "20px 30px";
+alerta.style.borderRadius = "10px";
+alerta.style.zIndex = "9999";
+alerta.style.fontSize = "18px";
+alerta.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
+alerta.style.display = "none";
+document.body.appendChild(alerta);
+function mostrarAlerta(mensaje, tipo = "info") {
+  alerta.textContent = mensaje;
+  alerta.style.backgroundColor =
+    tipo === "error" ? "rgba(255, 0, 0, 0.8)" : "rgba(0, 0, 0, 0.8)";
+  alerta.style.display = "block";
 
+  setTimeout(() => {
+    alerta.style.display = "none";
+  }, 3000);
+}
 let productos = await obtenerProductos();
 let usuarioLogueado = null;
 // --------------------- VERIFICAR USUARIO -------------------------
 async function verificarSesionInicial() {
   try {
     const res = await fetch(`${API_URL}/usuarios/actual`, {
-      method: "GET", // Es un GET
-      credentials: "include", // ¡CRÍTICO para que el navegador envíe la cookie 'session'!
+      method: "GET",
+      credentials: "include",
     });
 
     if (res.ok) {
@@ -75,10 +99,9 @@ export function cambiarUi(access, rol) {
           // 🔄 Volver a renderizar productos como si no hubiese usuario
           cambiarUi(false);
           mostrarProductos(productos, null); // ahora como visitante
+          // mostrarAlerta("Sesión cerrada correctamente", "info");
           alert("Sesión cerrada correctamente");
-
-          // También podés recargar la página si querés una limpieza total:
-          // location.reload();
+          location.reload();
         })
         .catch((error) => {
           console.error("Error al cerrar sesión:", error);

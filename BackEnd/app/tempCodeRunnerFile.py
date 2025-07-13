@@ -2,9 +2,8 @@ from main import app, db
 from models.usuario import Usuario, Rol
 import sys
 
-# Configura tus credenciales para el SuperAdmin
 SUPER_ADMIN_EMAIL = "admin@admin.com"
-SUPER_ADMIN_PASSWORD = "adminpass" # ¡CAMBIA ESTO!
+SUPER_ADMIN_PASSWORD = "adminpass"  # ¡CAMBIALO!
 SUPER_ADMIN_NOMBRE = "Administrador Principal"
 
 def create_initial_superadmin():
@@ -18,7 +17,7 @@ def create_initial_superadmin():
                     nombre=SUPER_ADMIN_NOMBRE,
                     email=SUPER_ADMIN_EMAIL,
                     password=SUPER_ADMIN_PASSWORD,
-                    rol= "superadmin"
+                    rol=Rol.SUPERADMIN  # <- Enum en mayúsculas
                 )
                 db.session.add(new_super_admin)
                 db.session.commit()
@@ -29,7 +28,6 @@ def create_initial_superadmin():
         else:
             print(f"El usuario SuperAdmin '{SUPER_ADMIN_EMAIL}' ya existe en la base de datos.")
 
-        # Opcional: Listar todos los usuarios para verificar
         print("\nUsuarios actuales en la base de datos:")
         all_users = Usuario.query.all()
         if not all_users:

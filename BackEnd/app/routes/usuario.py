@@ -229,3 +229,5 @@ def modificar_rol():
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": f"Error al modificar el rol: {str(e)}"}), 500
+    
+    

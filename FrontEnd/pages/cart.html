@@ -64,7 +64,21 @@
       </section>
     </header>
     <!-- Main de la pagina carrito (CARRITO) -->
-    <main></main>
+    <main class="container mt-4">
+      <h2>Tu Carrito</h2>
+      <ul id="cartItemsListMain" class="list-group mb-3">
+        <!-- Aca se cargan los productos del carrito -->
+      </ul>
+
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4>Total: $<span id="cartTotal">0.00</span></h4>
+        <button id="clearCartBtn" class="btn btn-danger">Vaciar carrito</button>
+      </div>
+
+      <button id="checkoutBtn" class="btn btn-primary" disabled>
+        Finalizar compra
+      </button>
+    </main>
     <!-- Footer para TODAS las paginas iguales.  -->
     <footer class="footer">
       <div class="footer-section">
@@ -95,7 +109,7 @@
     <!-- Modal para el login -->
     <div id="modal-container" class="login"></div>
     <!-- js para el cart.js -->
-    <script type="module" src="../assets/js/cart.js"></script>
+    <script type="module" src="../assets/js/cart.js" defer></script>
     <!-- js para el cartDropdown -->
     <script type="module" src="../assets/js/cartDropdown.js"></script>
     <!-- js para admin -->

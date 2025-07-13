@@ -1,21 +1,19 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 from flask_cors import CORS
+from flask_migrate import Migrate
+from routes.usuario import login_required, role_required
 import os
 
-from extensions import db # <--- Importa db desde extensions.py
-
-# NO importes las rutas aquí todavía. Las importaremos después.
-# from routes import productos
-# from routes import usuario
+from extensions import db 
 
 app = Flask(__name__)
-
+migrate = Migrate(app, db)
 # --- Configuración de la Base de Datos ---
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'mi_ecommerce.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db.init_app(app) # <--- Inicializa db con la instancia de app aquí
+db.init_app(app) 
 
 # --- Fin de Configuración de la Base de Datos ---
 
@@ -38,13 +36,13 @@ def handle_options():
         response.headers.add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
         return response
 
-# Ahora importa tus modelos y rutas *después* de que 'db' ha sido inicializado con 'app'.
-# La importación de modelos DEBE ir antes que las rutas si las rutas los necesitan.
-from models.producto import Producto # Importa el modelo
-from models.usuario import Usuario   # Importa el modelo
+from models.producto import Producto 
+from models.usuario import Usuario   
+from models.cart import Cart, CartItem
 
-from routes import productos # <--- Ahora se pueden importar de forma segura
-from routes import usuario   # <--- Ahora se pueden importar de forma segura
+from routes import cart
+from routes import productos
+from routes import usuario
 
 # ------------RUTAS PARA PRODUCTOS --------------
 @app.route('/productos', methods=['GET'])
@@ -94,11 +92,66 @@ def logout_usuario():
 @app.route('/usuarios/rol', methods=['PUT'])
 @usuario.role_required(['superAdmin'])
 def rol_usuario():
-    return usuario.modificar_rol
+    return usuario.modificar_rol()
+
+@app.route('/usuarios/eliminar_por_email', methods=['PUT'])
+@usuario.role_required(['superAdmin'])
+def eliminar_usuario():
+    return usuario.eliminar_usuario()
+
+
+
 # ------------FIN RUTAS PARA USUARIO--------------
+# ------------RUTA PARA ADMIN ------------
+@app.route('/admin')
+@role_required(['admin', 'superAdmin'])
+def mostrar_admin_panel():
+    return render_template('admin.html')
+
+
+
+
+
+# ------------RUTAS PARA EL CART--------------
+# Obtener productos del carrito del usuario actual
+@app.route('/cart', methods=['GET'])
+@login_required
+def get_cart():
+    return cart.get_cart()
+
+# Agregar producto al carrito
+@app.route('/cart/add', methods=['POST'])
+@login_required
+def add_to_cart():
+    return cart.add_to_cart()
+
+# Actualizar la cantidad de un item
+@app.route('/cart/update/<int:item_id>', methods=['PUT'])
+@login_required
+def update_cart_item(item_id):
+    return cart.update_cart_item(item_id)
+
+# Eliminar un item del carrito
+@app.route('/cart/remove/<int:item_id>', methods=['DELETE'])
+@login_required
+def remove_cart_item(item_id):
+    return cart.remove_cart_item(item_id)
+
+# Vaciar carrito completamente
+@app.route('/cart/clear', methods=['DELETE'])
+@login_required
+def clear_cart():
+    return cart.clear_cart()
+
+# ------------FIN RUTAS PARA CART--------------
+
+
+
 
 # --- Creación de tablas de la DB al iniciar la app ---
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all() # Esto crea las tablas definidas en tus modelos (Producto, Usuario)
-    app.run(debug=True)
+    
+        db.create_all()
+    print("Tablas creadas exitosamente.")
+    app.run(debug=True, port=5000)
